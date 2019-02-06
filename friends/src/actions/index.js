@@ -27,21 +27,15 @@ export function getFriends(){
   };
 };
 
-export function postFriend(friendData){
-  let newFriend = {
-    id: Date.now(),
-    name: friendData.name,
-    age: friendData.age,
-    email: friendData.email
-  }
+export function postFriend(friend){
   return dispatch => {
     dispatch({type: SAVING_FRIEND });
     axios
-      .post("http://localhost:5000/api/friends")
+      .post("http://localhost:5000/api/friends", friend)
       .then(response => {
         dispatch({
           type: FRIEND_SAVED,
-          payload: newFriend
+          payload: response.data
         })
       })
       .catch(error => {

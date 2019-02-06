@@ -27,6 +27,7 @@ export function reducer(state = initialState, action){
         friendDeleted: false,
         friends: [],
         error: null };
+
     case FETCHED:
       return { ...state,
         fetchingFriends: false,
@@ -39,6 +40,7 @@ export function reducer(state = initialState, action){
         friendDeleted: false,
         friends: action.payload,
         error: null};
+
     case SAVING_FRIEND:
       return { ...state,
         fetchingFriends: false,
@@ -49,7 +51,9 @@ export function reducer(state = initialState, action){
         friendUpdated: false,
         deletingFriend: false,
         friendDeleted: false,
+        friends: state.friends,
         error: null};
+
     case FRIEND_SAVED:
     return { ...state,
       fetchingFriends: false,
@@ -62,6 +66,7 @@ export function reducer(state = initialState, action){
       friendDeleted: false,
       friends: [...state.friends, action.payload],
       error: null};
+      
     case ERROR:
       return { ...state,
         fetchingFriends: false,

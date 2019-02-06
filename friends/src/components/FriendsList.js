@@ -6,18 +6,17 @@ import { getFriends } from '../actions';
 
 class FriendsList extends React.Component {
   componentDidMount(){
-    setTimeout(this.props.getFriends(), 5000);
+  this.props.getFriends();
   }
 
   render() {
-    console.log(this.props.friends)
     return (
       <div className="FriendsList">
         { this.props.fetching ? (
           <h2 className="loading"> Waiting for your friends list! </h2>
         ): null }
-        {this.props.friends.map(friend => {
-          return <Friend key={friend.id} friend={friend} />
+        {this.props.friends.map((friend,index) => {
+          return <Friend key={friend.id? friend.id: index} friend={friend} />
         })}
       </div>
     );
