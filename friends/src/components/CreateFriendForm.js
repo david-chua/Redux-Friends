@@ -76,7 +76,8 @@ class CreateFriendForm extends React.Component{
         name: '',
         email: '',
         age: '',
-      }
+      },
+      error: ''
     };
   }
 
@@ -91,13 +92,22 @@ class CreateFriendForm extends React.Component{
 
   addFriend = e => {
     e.preventDefault();
-    this.props.postFriend(this.state.friendData)
+    let newFriendData = {
+      name: this.state.friendData.name,
+      age: Number(this.state.friendData.age),
+      email: this.state.friendData.email
+    }
+
+    if (!this.state.friendData.name || !this.state.friendData.age || !this.state.friendData.email)
+      return this.setState({error: "Please complete all the fields."})
+    this.props.postFriend(newFriendData)
     this.setState({
       friendData: {
         name: '',
         email: '',
         age: '',
-      }
+      },
+      error: ''
     })
     this.props.history.push('/');
   }
@@ -132,6 +142,11 @@ class CreateFriendForm extends React.Component{
             POST friend
           </FormButton>
         </form>
+        {this.state.error ? (
+          <div>
+            <h1> {this.state.error}</h1>
+          </div>
+        ): null }
       </MainFormDiv>
     )
   }

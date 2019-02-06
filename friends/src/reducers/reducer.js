@@ -55,18 +55,18 @@ export function reducer(state = initialState, action){
         error: null};
 
     case FRIEND_SAVED:
-    return { ...state,
-      fetchingFriends: false,
-      friendsFetched: false,
-      friendSaved: true,
-      savingFriend: false,
-      updatingFriend: false,
-      friendUpdated: false,
-      deletingFriend: false,
-      friendDeleted: false,
-      friends: [...state.friends, action.payload],
-      error: null};
-      
+      return { ...state,
+        fetchingFriends: false,
+        friendsFetched: false,
+        friendSaved: true,
+        savingFriend: false,
+        updatingFriend: false,
+        friendUpdated: false,
+        deletingFriend: false,
+        friendDeleted: false,
+        friends: [...state.friends, action.payload],
+        error: null};
+        
     case ERROR:
       return { ...state,
         fetchingFriends: false,

@@ -7,6 +7,7 @@ import { getFriends } from './actions';
 
 import Navigation from './components/Navigation';
 import FriendsList from './components/FriendsList';
+import Friend from './components/Friend';
 import CreateFriendForm from './components/CreateFriendForm';
 
 class App extends Component {
@@ -21,6 +22,9 @@ class App extends Component {
         <Route
           path="/post"
           component= { CreateFriendForm } />
+        <Route
+          path="/friends/:id"
+          component = { Friend } />
       </div>
     );
   }
