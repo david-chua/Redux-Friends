@@ -1,28 +1,26 @@
 import React, { Component } from 'react';
+import { Route, withRouter } from 'react-router-dom';
 import './App.css';
 
 import { connect } from "react-redux";
 import { getFriends } from './actions';
 
-import FriendsList from './components/FriendsList'
+import Navigation from './components/Navigation';
+import FriendsList from './components/FriendsList';
+import CreateFriendForm from './components/CreateFriendForm';
 
 class App extends Component {
-  constructor(props){
-    super(props)
-  }
 
-  componentDidMount(){
-    setTimeout(this.props.getFriends(), 5000);
-
-  }
   render() {
-    console.log(this.props.friends)
     return (
       <div className="App">
-        { this.props.fetching ? (
-          <h2 className="loading"> Waiting for your friends list! </h2>
-        ): null }
-        <FriendsList friends={this.props.friends} />
+        <Navigation />
+        <Route
+          exact path='/'
+          component ={ FriendsList } />
+        <Route
+          path="/post"
+          component= { CreateFriendForm } />
       </div>
     );
   }
@@ -37,4 +35,4 @@ const mapStateToProps = function(state){
 
 
 
-export default connect(mapStateToProps, { getFriends })(App);
+export default withRouter(connect(mapStateToProps, { getFriends })(App));
