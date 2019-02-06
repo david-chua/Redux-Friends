@@ -8,11 +8,9 @@ import logger from "redux-logger";
 
 import { Provider } from "react-redux";
 
-const store = createStore(function(state,action){
-  return {
-    name: "david"
-  }
-})
+import { reducer } from "./reducers/reducer";
+
+const store = createStore(reducer)
 
 ReactDOM.render(
   <Provider store={store }>
