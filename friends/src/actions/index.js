@@ -10,7 +10,7 @@ export function getFriends(){
     dispatch({type: FETCHING });
     axios
       .get("http://localhost:5000/api/friends")
-      .then(resposne => {
+      .then(response => {
         dispatch({
           type: FETCHED,
           payload: response.data
