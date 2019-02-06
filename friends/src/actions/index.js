@@ -6,6 +6,8 @@ export const FETCHED_FRIEND = "FETCHED_FRIEND";
 export const SAVING_FRIEND = "SAVING_FRIEND"
 export const FRIEND_SAVED = "FRIEND_SAVED"
 export const ERROR = "ERROR";
+export const DELETING_FRIEND = "DELETING_FRIEND";
+export const FRIEND_DELETED = "FRIEND_DELETED";
 
 
 export function getFriends(){
@@ -63,6 +65,26 @@ export function postFriend(friend){
         dispatch({
           type: ERROR,
           payload: "Unable to save friend"
+        });
+      });
+  };
+};
+
+export function deleteFriend(id){
+  return dispatch => {
+    dispatch({ type: DELETING_FRIEND });
+    axios
+      .delete(`http://localhost:5000/api/friends/${id}`)
+      .then(response => {
+        dispatch({
+          type: FRIEND_DELETED,
+          payload: response.data
+        })
+      })
+      .catch(error => {
+        dispatch({
+          type: ERROR,
+          payload: "Unable to delete friend"
         });
       });
   };

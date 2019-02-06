@@ -1,4 +1,4 @@
-import { FETCHING, FETCHED, FETCHED_FRIEND, ERROR, SAVING_FRIEND, FRIEND_SAVED } from "../actions/"
+import { FETCHING, FETCHED, FETCHED_FRIEND, ERROR, SAVING_FRIEND, FRIEND_SAVED, DELETING_FRIEND, FRIEND_DELETED } from "../actions/"
 
 const initialState ={
   fetchingFriends: false,
@@ -54,7 +54,7 @@ export function reducer(state = initialState, action){
         friendDeleted: false,
         friend: action.payload,
         error: null};
-        
+
     case SAVING_FRIEND:
       return { ...state,
         fetchingFriends: false,
@@ -79,6 +79,32 @@ export function reducer(state = initialState, action){
         deletingFriend: false,
         friendDeleted: false,
         friends: [...state.friends, action.payload],
+        error: null};
+
+    case DELETING_FRIEND:
+      return { ...state,
+        fetchingFriends: false,
+        friendsFetched: false,
+        friendSaved: false,
+        savingFriend: false,
+        updatingFriend: false,
+        friendUpdated: false,
+        deletingFriend: true,
+        friendDeleted: false,
+        friends: [],
+        error: null};
+
+    case FRIEND_DELETED:
+      return { ...state,
+        fetchingFriends: false,
+        friendsFetched: false,
+        friendSaved: false,
+        savingFriend: false,
+        updatingFriend: false,
+        friendUpdated: false,
+        deletingFriend: false,
+        friendDeleted: true,
+        friends: [],
         error: null};
 
     case ERROR:
