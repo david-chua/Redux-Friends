@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const FETCHING = "FETCHING";
 export const FETCHED = "FETCHED";
+export const FETCHED_FRIEND = "FETCHED_FRIEND";
 export const SAVING_FRIEND = "SAVING_FRIEND"
 export const FRIEND_SAVED = "FRIEND_SAVED"
 export const ERROR = "ERROR";
@@ -22,6 +23,26 @@ export function getFriends(){
         dispatch({
           type: ERROR,
           payload: "You have no friends"
+        });
+      });
+  };
+};
+
+export function getFriend(id){
+  return dispatch => {
+    dispatch({type: FETCHING });
+    axios
+      .get(`http://localhost:5000/api/friends/${id}`)
+      .then(response => {
+        dispatch({
+          type: FETCHED_FRIEND,
+          payload: response.data
+        })
+      })
+      .catch(error => {
+        dispatch({
+          type: ERROR,
+          payload: "Unable to fetch friend"
         });
       });
   };
