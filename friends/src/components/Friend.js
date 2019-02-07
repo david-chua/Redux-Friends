@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getFriend, deleteFriend } from '../actions';
 
 
@@ -23,7 +24,9 @@ class Friend extends React.Component{
         <h1> Age: {this.props.friend.age}</h1>
         <h1> Email: {this.props.friend.email} </h1>
         <button onClick={this.deleteFriend}> Delete Friend </button>
-        <button> Edit Friend</button>
+        <Link to={{pathname: `/friends/${this.props.friend.id}/edit`, state: {
+            name: this.props.friend.name, age: this.props.friend.age, email: this.props.friend.email, id: this.props.friend.id}
+          }}><button> Edit Friend</button></Link>
       </div>
     )
   }

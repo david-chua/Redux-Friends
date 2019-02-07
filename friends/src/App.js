@@ -9,6 +9,7 @@ import Navigation from './components/Navigation';
 import FriendsList from './components/FriendsList';
 import Friend from './components/Friend';
 import CreateFriendForm from './components/CreateFriendForm';
+import EditFriendForm from './components/EditFriendForm';
 
 class App extends Component {
 
@@ -23,8 +24,11 @@ class App extends Component {
           path="/post"
           component= { CreateFriendForm } />
         <Route
-          path="/friends/:id"
+          exact path="/friends/:id"
           component = { Friend } />
+        <Route
+          exact path="/friends/:id/edit"
+          component = { EditFriendForm } />
       </div>
     );
   }
