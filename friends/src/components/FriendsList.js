@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const FriendsListDiv = styled.div`
   margin: 0 auto;
-  width: 800px;
+  width: 90%
   height: 300px
 `;
 
@@ -20,14 +20,37 @@ const LoadingParagraph = styled.h2`
 `;
 
 const ListContainer = styled.section`
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 90%;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border-bottom: 1px solid black;
 `;
 
-const nameInfo = styled.h1`
-  font-size: 40em;
+const NameDiv = styled.div`
+  width: 200px;
 `;
+
+const NameInfo = styled.h1`
+  font-size: 3em;
+`;
+const AgeDiv = styled.div`
+  width: 200px;
+`;
+
+const AgeInfo = styled.h3`
+  font-size: 1.4em;
+`;
+const EmailDiv = styled.div`
+  width: 300px;
+`;
+
+const EmailInfo = styled.h3`
+  font-size: 1.4em;
+`;
+
 
 
 class FriendsList extends React.Component {
@@ -38,13 +61,6 @@ class FriendsList extends React.Component {
   render() {
     return (
       <FriendsListDiv>
-
-        <ListContainer>
-            <nameInfo> Ben </nameInfo>
-            <h3> 30 yrs old</h3>
-            <h3> ben@lambdaschool.com</h3>
-          </ListContainer>
-
         { this.props.fetching ? (
           <LoadingDiv>
             <LoadingParagraph className="loading"> Waiting for your Friend's data! </LoadingParagraph>
@@ -59,9 +75,17 @@ class FriendsList extends React.Component {
         ): null}
         {this.props.friends.map((friend,index) => {
           return <ListContainer key={friend.id ? friend.id : index }>
-                    <Link to={`friends/${ friend.id }`}><h1> Name: {friend.name} </h1></Link>
-                    <h1> Age: {friend.age}</h1>
-                    <h1> Email: {friend.email} </h1>
+                    <Link to={`friends/${ friend.id }`}>
+                       <NameDiv>
+                        <NameInfo> {friend.name} </NameInfo>
+                        </NameDiv>
+                    </Link>
+                    <AgeDiv>
+                      <AgeInfo> {friend.age} yrs old</AgeInfo>
+                    </AgeDiv>
+                    <EmailDiv>
+                      <EmailInfo> {friend.email}</EmailInfo>
+                    </EmailDiv>
                   </ListContainer>
         })}
       </FriendsListDiv>

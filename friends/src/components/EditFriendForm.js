@@ -164,7 +164,7 @@ class EditFriendForm extends React.Component{
           <FormInput
             type="text"
             name="name"
-            placeholder="name"
+            placeholder={this.props.friend.name}
             onChange={this.handleChange}
             value={this.state.friendData.name}
           />
@@ -178,7 +178,7 @@ class EditFriendForm extends React.Component{
           <FormInput
             type="text"
             name="age"
-            placeholder="age"
+            placeholder={this.props.friend.age}
             onChange={this.handleChange}
             value={this.state.friendData.age}
           />
