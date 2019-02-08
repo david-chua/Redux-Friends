@@ -25,10 +25,18 @@ class App extends Component {
           component= { CreateFriendForm } />
         <Route
           exact path="/friends/:id"
-          component = { Friend } />
+          render={(props) => <Friend
+            { ...props }
+            friends={this.props.friends}/>}
+        />
         <Route
           exact path="/friends/:id/edit"
-          component = { EditFriendForm } />
+          render={(props) => <EditFriendForm
+            { ...props }
+            location = {this.props.location}
+            friends = { this.props.friends }/>}
+        />
+
       </div>
     );
   }

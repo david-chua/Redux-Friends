@@ -17,7 +17,6 @@ class Friend extends React.Component{
   }
 
   render(){
-    console.log(this.props)
     return (
       <div>
         <h1> Name: {this.props.friend.name}</h1>
@@ -25,7 +24,7 @@ class Friend extends React.Component{
         <h1> Email: {this.props.friend.email} </h1>
         <button onClick={this.deleteFriend}> Delete Friend </button>
         <Link to={{pathname: `/friends/${this.props.friend.id}/edit`, state: {
-            name: this.props.friend.name, age: this.props.friend.age, email: this.props.friend.email, id: this.props.friend.id}
+            name: this.props.friend.name, age: this.props.friend.age, email: this.props.friend.email, id: this.props.friend.id, friends: this.props.friends }
           }}><button> Edit Friend</button></Link>
       </div>
     )
@@ -33,6 +32,7 @@ class Friend extends React.Component{
 }
   const mapStateToProps = function(state){
     return{
+      friends: state.friends,
       friend: state.friend,
       fetching: state.fetchingFriends
     }

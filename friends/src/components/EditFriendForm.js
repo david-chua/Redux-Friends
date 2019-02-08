@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom'
 
 import { connect } from "react-redux";
+import { getFriend, editFriend } from '../actions';
 
 export const MainFormDiv = styled.div`
   width: 500px;
@@ -71,6 +73,7 @@ class EditFriendForm extends React.Component{
   constructor(props){
     super(props)
     this.state = {
+      mountedName:'',
       friendData: {
         name: '',
         email: '',
@@ -81,24 +84,7 @@ class EditFriendForm extends React.Component{
   }
 
   componentDidMount(){
-    let name;
-    let email;
-    let age;
-    const id = this.props.location.state.id;
-    if (id){
-      name = this.props.location.state.name;
-      email = this.props.location.state.email;
-      age = this.props.location.state.age;
-
-      this.setState({
-        friendData: {
-          ...this.state.friendData,
-          name: name,
-          age: age,
-          email: email
-        }
-      })
-    }
+    this.props.getFriend(this.props.match.params.id)
   }
 
   handleChange = e => {
@@ -110,13 +96,71 @@ class EditFriendForm extends React.Component{
     });
   }
 
+  checkMissingfield = (newFriendData) => {
+    console.log('testing');
+    console.log(this.props.friend.name);
+    if (this.state.friendData.name === ''){
+
+    }
+
+  }
+
+  updateFriend = (e, id, friend) => {
+
+    e.preventDefault();
+    let friendToBeUpdated;
+    if (!this.state.friendData.name && !this.state.friendData.email && !this.state.friendData.age){
+      return this.setState({error: 'Nothing to change'})
+    } else if (!this.state.friendData.name && !this.state.friendData.email){
+      friendToBeUpdated = {
+        name: this.props.friend.name,
+        age: this.state.friendData.age,
+        email: this.props.friend.email
+      }
+    }  else if (!this.state.friendData.name && !this.state.friendData.age){
+      friendToBeUpdated = {
+        name: this.props.friend.name,
+        age: this.props.friend.age,
+        email: this.state.friendData.email
+      }
+    } else if (!this.state.friendData.email && !this.state.friendData.age){
+      friendToBeUpdated = {
+        name: this.state.friendData.name,
+        age: this.props.friend.age,
+        email: this.props.friend.email
+      }
+    } else if (!this.state.friendData.name){
+      friendToBeUpdated = {
+        name: this.props.friend.name,
+        age: this.state.friendData.age,
+        email: this.state.friendData.email
+      }
+    } else if (!this.state.friendData.age){
+      friendToBeUpdated = {
+        name: this.state.friendData.name,
+        age: this.props.friend.age,
+        email: this.state.friendData.email
+      }
+    } else if (!this.state.friendData.email){
+      friendToBeUpdated = {
+        name: this.state.friendData.name,
+        age: this.state.friendData.age,
+        email: this.props.friend.email
+      }
+    }
+    console.log('after check', this.state.friendData)
+    id = Number(this.props.match.params.id)
+    // friend = this.state.friendData
+    // console.log(friend)
+    this.props.editFriend(id, friendToBeUpdated);
+    this.props.history.push('/');
+  }
+
   render(){
-    console.log(this.state)
-    const friend = this.props.location.state;
     return (
       <MainFormDiv>
         <FormTitle>PUT (edit) a  friend</FormTitle>
-        <form>
+        <form onSubmit={this.updateFriend}>
           <FormInput
             type="text"
             name="name"
@@ -127,14 +171,14 @@ class EditFriendForm extends React.Component{
           <FormInput
             type="text"
             name="email"
-            placeholder="email"
+            placeholder={this.props.friend.email}
             onChange={this.handleChange}
             value={this.state.friendData.email}
           />
           <FormInput
             type="text"
             name="age"
-            placeholder="height"
+            placeholder="age"
             onChange={this.handleChange}
             value={this.state.friendData.age}
           />
@@ -152,5 +196,12 @@ class EditFriendForm extends React.Component{
   }
 }
 
+const mapStateToProps = function(state){
+  return {
+    friend: state.friend,
+    fetching: state.fetchingFriends,
+  }
+}
 
-export default connect(null)(EditFriendForm);
+
+export default withRouter(connect(mapStateToProps, { getFriend, editFriend })(EditFriendForm));
